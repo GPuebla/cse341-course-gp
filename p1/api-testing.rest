@@ -3,13 +3,13 @@
 ###GET the message: Welcome to the Contacts API! 
 GET http://localhost:5000/ 
 
-###GET all the users
+###GET all the contacts
 GET http://localhost:5000/contacts
 
-### GET users by id (66feda6634acaf25fc843242)
+### GET contacts by id (66feda6634acaf25fc843242)
 GET http://localhost:5000/contacts/6a4db31f3d9a451dd496560f
 
-### Create a new user 
+### Create a new contact
 ###POST http://localhost:5000/contacts HTTP/1.1 Content-Type: application/json
 
 # {
@@ -21,8 +21,8 @@ GET http://localhost:5000/contacts/6a4db31f3d9a451dd496560f
 ###GET the message: Welcome to the Contacts API! 
 GET https://cse341-course-gp.onrender.com
 
-###GET all the users 
+###GET all the contacts 
 GET https://cse341-course-gp.onrender.com/contacts
 
-### GET users by id (6a4db31f3d9a451dd496560e) 
+### GET contacts by id (6a4db31f3d9a451dd496560e) 
 GET https://cse341-course-gp.onrender.com/contacts/6a4db31f3d9a451dd496560e
