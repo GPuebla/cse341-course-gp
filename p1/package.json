@@ -17,5 +17,11 @@
   "bugs": {
     "url": "https://github.com/GPuebla/cse341-course-gp/issues"
   },
-  "homepage": "https://github.com/GPuebla/cse341-course-gp#readme"
+  "homepage": "https://github.com/GPuebla/cse341-course-gp#readme",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongodb": "^6.21.0",
+    "nodemon": "^3.1.14"
+  }
 }
