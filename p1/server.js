@@ -2,6 +2,7 @@ const express = require('express');
 
 const mongodb = require('./data/db.js');
 const app = express();
+app.use(express.json());
 const routes = require('./routes/index');
 
 
