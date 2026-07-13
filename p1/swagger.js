@@ -5,8 +5,8 @@ const doc = {
     title: 'Contacts API',
     description: 'API for managing contacts - CSE 341',
   },
-  host: 'localhost:5000',
-  schemes: ['http', 'https'],
+  host: process.env.RENDER_EXTERNAL_HOSTNAME || 'localhost:5000',
+  schemes: process.env.RENDER_EXTERNAL_HOSTNAME ? ['https'] : ['http'],
 };
 
 const outputFile = './swagger.json';
