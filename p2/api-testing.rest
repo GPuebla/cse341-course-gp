@@ -1,0 +1,47 @@
+### LOCAL
+
+###GET the message: Welcome to the Contacts API! 
+GET http://localhost:5000/ 
+
+###GET all the contacts
+GET http://localhost:5000/contacts
+
+### GET contacts by id (66feda6634acaf25fc843242)
+GET http://localhost:5000/contacts/6a4db31f3d9a451dd496560f
+
+### Create Contact
+POST http://localhost:5000/contacts
+Content-Type: application/json
+
+{
+  "firstName": "Maria Eugenia",
+  "lastName": "Thomas",
+  "email": "test6@test.com",
+  "favoriteColor": "orange",
+  "birthday": "1987-06-16"
+}
+
+### UPDATE Contact
+PUT http://localhost:5000/contacts/6a5279673fa583f861b11a38
+Content-Type: application/json
+
+{
+  "firstName": "Maria Lourdes",
+  "lastName": "Thomas",
+  "email": "test5@test.com",
+  "favoriteColor": "orange",
+  "birthday": "1987-06-16"
+}
+#### DELETE Contact
+DELETE http://localhost:5000/contacts/6a5279673fa583f861b11a38
+
+### RENDER (update with p2's own Render URL once deployed)
+
+###GET the message: Welcome to the Contacts API!
+GET https://REPLACE_WITH_P2_RENDER_URL.onrender.com
+
+###GET all the contacts
+GET https://REPLACE_WITH_P2_RENDER_URL.onrender.com/contacts
+
+### GET contacts by id (6a4db31f3d9a451dd496560e)
+GET https://REPLACE_WITH_P2_RENDER_URL.onrender.com/contacts/6a4db31f3d9a451dd496560e

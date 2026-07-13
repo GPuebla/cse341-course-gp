@@ -1,0 +1,30 @@
+{
+  "name": "cse341-course-gp",
+  "version": "1.0.0",
+  "description": "CSE 341 Project 2",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "swagger": "node swagger.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GPuebla/cse341-course-gp.git"
+  },
+  "author": "Gabriel Puebla",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GPuebla/cse341-course-gp/issues"
+  },
+  "homepage": "https://github.com/GPuebla/cse341-course-gp#readme",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongodb": "^6.21.0",
+    "nodemon": "^3.1.14",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
