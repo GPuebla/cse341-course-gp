@@ -22,7 +22,7 @@ Content-Type: application/json
 }
 
 ### UPDATE Contact
-PUT http://localhost:5000/contacts/6a5279673fa583f861b11a38
+PUT http://localhost:5000/contacts/6a5278f73fa583f861b11a37
 Content-Type: application/json
 
 {
@@ -33,7 +33,7 @@ Content-Type: application/json
   "birthday": "1987-06-16"
 }
 #### DELETE Contact
-DELETE http://localhost:5000/contacts/6a5279673fa583f861b11a38
+DELETE http://localhost:5000/contacts/6a5278f73fa583f861b11a37
 
 ### RENDER
 
@@ -43,5 +43,31 @@ GET https://cse341-course-gp.onrender.com
 ###GET all the contacts 
 GET https://cse341-course-gp.onrender.com/contacts
 
-### GET contacts by id (6a4db31f3d9a451dd496560e) 
+### GET contacts by id (6a4db31f3d9a451dd496560e)
 GET https://cse341-course-gp.onrender.com/contacts/6a4db31f3d9a451dd496560e
+
+### Create Contact
+POST https://cse341-course-gp.onrender.com/contacts
+Content-Type: application/json
+
+{
+  "firstName": "Maria Eugenia",
+  "lastName": "Thomas",
+  "email": "test6@test.com",
+  "favoriteColor": "orange",
+  "birthday": "1987-06-16"
+}
+
+### UPDATE Contact
+PUT https://cse341-course-gp.onrender.com/contacts/6a527815b67ba566ace813d2
+Content-Type: application/json
+
+{
+  "firstName": "Pepe",
+  "lastName": "Gomez",
+  "email": "test4@test.com",
+  "favoriteColor": "pink",
+  "birthday": "1990-06-01"
+}
+#### DELETE Contact
+DELETE https://cse341-course-gp.onrender.com/contacts/6a527815b67ba566ace813d2
