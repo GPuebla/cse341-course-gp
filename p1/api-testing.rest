@@ -43,19 +43,19 @@ GET https://cse341-course-gp.onrender.com
 ###GET all the contacts 
 GET https://cse341-course-gp.onrender.com/contacts
 
-### GET contacts by id (6a4db31f3d9a451dd496560e)
-GET https://cse341-course-gp.onrender.com/contacts/6a4db31f3d9a451dd496560e
+### GET contacts by id (6a4db31f3d9a451dd496560f)
+GET https://cse341-course-gp.onrender.com/contacts/6a4db31f3d9a451dd496560f
 
 ### Create Contact
 POST https://cse341-course-gp.onrender.com/contacts
 Content-Type: application/json
 
 {
-  "firstName": "Maria Eugenia",
-  "lastName": "Thomas",
-  "email": "test6@test.com",
-  "favoriteColor": "orange",
-  "birthday": "1987-06-16"
+  "firstName": "Maria Lourdes",
+  "lastName": "Almada",
+  "email": "test7@test.com",
+  "favoriteColor": "black",
+  "birthday": "1998-02-19"
 }
 
 ### UPDATE Contact
@@ -70,4 +70,4 @@ Content-Type: application/json
   "birthday": "1990-06-01"
 }
 #### DELETE Contact
-DELETE https://cse341-course-gp.onrender.com/contacts/6a527815b67ba566ace813d2
+DELETE https://cse341-course-gp.onrender.com/contacts/6a4db31f3d9a451dd496560f
