@@ -5,10 +5,10 @@
     "description": "API for managing contacts - CSE 341",
     "version": "1.0.0"
   },
-  "host": "cse341-course-gp.onrender.com",
+  "host": "localhost:5000",
   "basePath": "/",
   "schemes": [
-    "https"
+    "http"
   ],
   "paths": {
     "/": {
