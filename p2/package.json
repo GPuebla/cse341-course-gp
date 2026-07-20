@@ -1,7 +1,7 @@
 {
   "name": "cse341-course-gp",
   "version": "1.0.0",
-  "description": "CSE 341 Project 2",
+  "description": "CSE 341 Project 1",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
