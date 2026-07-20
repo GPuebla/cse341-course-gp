@@ -56,12 +56,12 @@ POST https://cse341-course-gp-ak75.onrender.com/books
 Content-Type: application/json
 
 {
-  "title": "Harry Potter and the Philosopher's Stone",
-  "isbn": "9780747532699",
-  "publicationYear": 1997,
-  "pages": 320,
+  "title": "The power of habit",
+  "isbn": "9680747532684",
+  "publicationYear": 2003,
+  "pages": 318,
   "available": false,
-  "authorId": "2",
+  "authorId": "3",
   "categoryId": "2"
 }
 
