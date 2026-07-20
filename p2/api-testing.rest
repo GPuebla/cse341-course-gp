@@ -1,73 +1,83 @@
 ### LOCAL
 
-###GET the message: Welcome to the Contacts API! 
-GET http://localhost:5000/ 
+###GET the message: Welcome to the Books API!
+GET http://localhost:5000/
 
-###GET all the contacts
-GET http://localhost:5000/contacts
+###GET all the books
+GET http://localhost:5000/books
 
-### GET contacts by id (66feda6634acaf25fc843242)
-GET http://localhost:5000/contacts/6a4db31f3d9a451dd496560f
+### GET book by id (6a5e7eedaed1842b4a131922)
+GET http://localhost:5000/books/6a5e7eedaed1842b4a131922
 
-### Create Contact
-POST http://localhost:5000/contacts
+### Create Book
+POST http://localhost:5000/books
 Content-Type: application/json
 
 {
-  "firstName": "Maria Eugenia",
-  "lastName": "Thomas",
-  "email": "test6@test.com",
-  "favoriteColor": "orange",
-  "birthday": "1987-06-16"
+  "title": "Harry Potter and the Philosopher's Stone",
+  "isbn": "9780747532699",
+  "publicationYear": 1997,
+  "pages": 320,
+  "available": false,
+  "authorId": "2",
+  "categoryId": "2"
 }
 
-### UPDATE Contact
-PUT http://localhost:5000/contacts/6a5278f73fa583f861b11a37
+### UPDATE Book
+PUT http://localhost:5000/books/6a5e7eedaed1842b4a131922
 Content-Type: application/json
 
 {
-  "firstName": "Maria Lourdes",
-  "lastName": "Thomas",
-  "email": "test5@test.com",
-  "favoriteColor": "orange",
-  "birthday": "1987-06-16"
+  "title": "Harry Potter and the Philosopher's Stone",
+  "isbn": "9780747532699",
+  "publicationYear": 1997,
+  "pages": 320,
+  "available": true,
+  "authorId": "2",
+  "categoryId": "2"
 }
-#### DELETE Contact
-DELETE http://localhost:5000/contacts/6a5278f73fa583f861b11a37
+
+#### DELETE Book
+DELETE http://localhost:5000/books/6a5e7eedaed1842b4a131922
 
 ### RENDER
 
-###GET the message: Welcome to the Contacts API! 
-GET https://cse341-course-gp.onrender.com
+###GET the message: Welcome to the Books API!
+GET https://cse341-course-gp-ak75.onrender.com/
 
-###GET all the contacts 
-GET https://cse341-course-gp.onrender.com/contacts
+###GET all the books
+GET https://cse341-course-gp-ak75.onrender.com/books
 
-### GET contacts by id (6a4db31f3d9a451dd496560f)
-GET https://cse341-course-gp.onrender.com/contacts/6a4db31f3d9a451dd496560f
+### GET book by id (6a5e7eedaed1842b4a131922)
+GET https://cse341-course-gp-ak75.onrender.com/books/6a5e7eedaed1842b4a131922
 
-### Create Contact
-POST https://cse341-course-gp.onrender.com/contacts
+### Create Book
+POST https://cse341-course-gp-ak75.onrender.com/books
 Content-Type: application/json
 
 {
-  "firstName": "Maria Lourdes",
-  "lastName": "Almada",
-  "email": "test7@test.com",
-  "favoriteColor": "black",
-  "birthday": "1998-02-19"
+  "title": "Harry Potter and the Philosopher's Stone",
+  "isbn": "9780747532699",
+  "publicationYear": 1997,
+  "pages": 320,
+  "available": false,
+  "authorId": "2",
+  "categoryId": "2"
 }
 
-### UPDATE Contact
-PUT https://cse341-course-gp.onrender.com/contacts/6a527815b67ba566ace813d2
+### UPDATE Book
+PUT https://cse341-course-gp-ak75.onrender.com/books/6a5e7eedaed1842b4a131922
 Content-Type: application/json
 
 {
-  "firstName": "Pepe",
-  "lastName": "Gomez",
-  "email": "test4@test.com",
-  "favoriteColor": "pink",
-  "birthday": "1990-06-01"
+  "title": "Harry Potter and the Philosopher's Stone",
+  "isbn": "9780747532699",
+  "publicationYear": 1997,
+  "pages": 320,
+  "available": true,
+  "authorId": "2",
+  "categoryId": "2"
 }
-#### DELETE Contact
-DELETE https://cse341-course-gp.onrender.com/contacts/6a4db31f3d9a451dd496560f
+
+#### DELETE Book
+DELETE https://cse341-course-gp-ak75.onrender.com/books/6a5e7eedaed1842b4a131922

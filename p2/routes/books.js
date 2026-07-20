@@ -20,9 +20,13 @@ routes.post('/', /*
     in: 'body',
     description: 'New book data',
     schema: {
-      title: 'The Great Gatsby',
-      author: 'F. Scott Fitzgerald',
-      publicationYear: 1925
+      title: "Harry Potter and the Philosopher's Stone",
+      isbn: '9780747532699',
+      publicationYear: 1997,
+      pages: 320,
+      available: false,
+      authorId: '2',
+      categoryId: '2'
     }
   }
 */ booksController.createBook);
@@ -35,9 +39,13 @@ routes.put('/:id', /*
     in: 'body',
     description: 'Updated book data',
     schema: {
-      title: 'The Great Gatsby',
-      author: 'F. Scott Fitzgerald',
-      publicationYear: 1925
+      title: "Harry Potter and the Philosopher's Stone",
+      isbn: '9780747532699',
+      publicationYear: 1997,
+      pages: 320,
+      available: false,
+      authorId: '2',
+      categoryId: '2'
     }
   }
 */ booksController.updateBook);
