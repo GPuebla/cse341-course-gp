@@ -1,9 +1,9 @@
 const routes = require('express').Router();
 
 routes.get('/', (req, res) => {
-  res.send('Welcome to the Contacts API!');
+  res.send('Welcome to the Books API!');
 });
 
-routes.use('/contacts', require('./contacts'));
+routes.use('/books', require('./books'));
 
 module.exports = routes;
