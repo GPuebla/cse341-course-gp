@@ -5,13 +5,13 @@ const booksController = require('../controllers/books');
 routes.get('/', /*
   #swagger.tags = ['Books']
   #swagger.description = 'Get the list of all books.'
-*/ booksController.getAllbooks);
+*/ booksController.getAllBooks);
 
 routes.get('/:id', /*
   #swagger.tags = ['Books']
   #swagger.description = 'Get a single book by its id.'
   #swagger.parameters['id'] = { description: 'Book id (MongoDB ObjectId)' }
-*/ booksController.getContactById);
+*/ booksController.getBookById);
 
 routes.post('/', /*
   #swagger.tags = ['Books']
@@ -25,7 +25,7 @@ routes.post('/', /*
       publicationYear: 1925
     }
   }
-*/ booksController.createContact);
+*/ booksController.createBook);
 
 routes.put('/:id', /*
   #swagger.tags = ['Books']
@@ -40,12 +40,12 @@ routes.put('/:id', /*
       publicationYear: 1925
     }
   }
-*/ booksController.updateContact);
+*/ booksController.updateBook);
 
 routes.delete('/:id', /*
   #swagger.tags = ['Books']
   #swagger.description = 'Delete a book by its id.'
   #swagger.parameters['id'] = { description: 'Book id (MongoDB ObjectId)' }
-*/ booksController.deleteContact);
+*/ booksController.deleteBook);
 
 module.exports = routes;
