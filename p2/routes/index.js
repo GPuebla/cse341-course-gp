@@ -5,5 +5,7 @@ routes.get('/', (req, res) => {
 });
 
 routes.use('/books', require('./books'));
+routes.use('/authors', require('./authors'));
+routes.use('/categories', require('./categories'));
 
 module.exports = routes;
