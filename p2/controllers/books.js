@@ -15,6 +15,9 @@ const getAllBooks = catchAsync(async (req, res, next) => {
 
 // GET /books/:id
 const getBookById = catchAsync(async (req, res, next) => {
+  if (!ObjectId.isValid(req.params.id)) {
+    return next(new AppError("Invalid book id.", 400));
+  }
   const bookId = new ObjectId(req.params.id);
 
   const book = await mongodb
@@ -73,6 +76,9 @@ const createBook = catchAsync(async (req, res, next) => {
 
 // PUT /books/:id
 const updateBook = catchAsync(async (req, res, next) => {
+  if (!ObjectId.isValid(req.params.id)) {
+    return next(new AppError("Invalid book id.", 400));
+  }
   const bookId = new ObjectId(req.params.id);
 
   const book = {
@@ -98,6 +104,9 @@ const updateBook = catchAsync(async (req, res, next) => {
 
 // DELETE /books/:id
 const deleteBook = catchAsync(async (req, res, next) => {
+  if (!ObjectId.isValid(req.params.id)) {
+    return next(new AppError("Invalid book id.", 400));
+  }
   const bookId = new ObjectId(req.params.id);
 
   const result = await mongodb
