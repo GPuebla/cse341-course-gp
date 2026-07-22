@@ -1,143 +1,116 @@
 const mongodb = require("../data/db");
 const { ObjectId } = require("mongodb");
+const { AppError, catchAsync } = require("../utils/errors");
 
 // GET /books
-const getAllBooks = async (req, res) => {
-  try {
-    const books = await mongodb
-      .getDatabase()
-      .collection("books")
-      .find()
-      .toArray();
+const getAllBooks = catchAsync(async (req, res, next) => {
+  const books = await mongodb
+    .getDatabase()
+    .collection("books")
+    .find()
+    .toArray();
 
-    res.status(200).json(books);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
+  res.status(200).json(books);
+});
 
 // GET /books/:id
-const getBookById = async (req, res) => {
-  try {
-    const bookId = new ObjectId(req.params.id);
+const getBookById = catchAsync(async (req, res, next) => {
+  const bookId = new ObjectId(req.params.id);
 
-    const book = await mongodb
-      .getDatabase()
-      .collection("books")
-      .findOne({ _id: bookId });
+  const book = await mongodb
+    .getDatabase()
+    .collection("books")
+    .findOne({ _id: bookId });
 
-    if (!book) {
-      return res.status(404).json({ message: "Book not found." });
-    }
-
-    res.status(200).json(book);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+  if (!book) {
+    return next(new AppError("Book not found.", 404));
   }
-};
+
+  res.status(200).json(book);
+});
 
 // GET /books/author/:authorId
-const getBooksByAuthorId = async (req, res) => {
-  try {
-    const authorId = new ObjectId(req.params.authorId);
+const getBooksByAuthorId = catchAsync(async (req, res, next) => {
+  const authorId = new ObjectId(req.params.authorId);
 
-    const books = await mongodb
-      .getDatabase()
-      .collection("books")
-      .find({ authorId })
-      .toArray();
+  const books = await mongodb
+    .getDatabase()
+    .collection("books")
+    .find({ authorId })
+    .toArray();
 
-    res.status(200).json(books);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
+  res.status(200).json(books);
+});
 
 // GET /books/category/:categoryId
-const getBooksByCategoryId = async (req, res) => {
-  try {
-    const categoryId = new ObjectId(req.params.categoryId);
+const getBooksByCategoryId = catchAsync(async (req, res, next) => {
+  const categoryId = new ObjectId(req.params.categoryId);
 
-    const books = await mongodb
-      .getDatabase()
-      .collection("books")
-      .find({ categoryId })
-      .toArray();
+  const books = await mongodb
+    .getDatabase()
+    .collection("books")
+    .find({ categoryId })
+    .toArray();
 
-    res.status(200).json(books);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
+  res.status(200).json(books);
+});
 
 // POST /books
-const createBook = async (req, res) => {
-  try {
-    const book = {
-      ...req.body,
-      authorId: new ObjectId(req.body.authorId),
-      categoryId: new ObjectId(req.body.categoryId)
-    };
+const createBook = catchAsync(async (req, res, next) => {
+  const book = {
+    ...req.body,
+    authorId: new ObjectId(req.body.authorId),
+    categoryId: new ObjectId(req.body.categoryId)
+  };
 
-    const result = await mongodb
-      .getDatabase()
-      .collection("books")
-      .insertOne(book);
+  const result = await mongodb
+    .getDatabase()
+    .collection("books")
+    .insertOne(book);
 
-    res.status(201).json(result);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
+  res.status(201).json(result);
+});
 
 // PUT /books/:id
-const updateBook = async (req, res) => {
-  try {
-    const bookId = new ObjectId(req.params.id);
+const updateBook = catchAsync(async (req, res, next) => {
+  const bookId = new ObjectId(req.params.id);
 
-    const book = {
-      ...req.body,
-      authorId: new ObjectId(req.body.authorId),
-      categoryId: new ObjectId(req.body.categoryId)
-    };
+  const book = {
+    ...req.body,
+    authorId: new ObjectId(req.body.authorId),
+    categoryId: new ObjectId(req.body.categoryId)
+  };
 
-    const result = await mongodb
-      .getDatabase()
-      .collection("books")
-      .updateOne(
-        { _id: bookId },
-        { $set: book }
-      );
+  const result = await mongodb
+    .getDatabase()
+    .collection("books")
+    .updateOne(
+      { _id: bookId },
+      { $set: book }
+    );
 
-    if (result.matchedCount === 0) {
-      return res.status(404).json({ message: "Book not found." });
-    }
-
-    res.status(200).json(result);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+  if (result.matchedCount === 0) {
+    return next(new AppError("Book not found.", 404));
   }
-};
+
+  res.status(200).json(result);
+});
 
 // DELETE /books/:id
-const deleteBook = async (req, res) => {
-  try {
-    const bookId = new ObjectId(req.params.id);
+const deleteBook = catchAsync(async (req, res, next) => {
+  const bookId = new ObjectId(req.params.id);
 
-    const result = await mongodb
-      .getDatabase()
-      .collection("books")
-      .deleteOne({ _id: bookId });
+  const result = await mongodb
+    .getDatabase()
+    .collection("books")
+    .deleteOne({ _id: bookId });
 
-    if (result.deletedCount === 0) {
-      return res.status(404).json({ message: "Book not found." });
-    }
-
-    res.status(200).json(result);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+  if (result.deletedCount === 0) {
+    return next(new AppError("Book not found.", 404));
   }
-};
+
+  res.status(200).json(result);
+});
 
 module.exports = {
   getAllBooks,
