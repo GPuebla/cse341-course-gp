@@ -20,7 +20,7 @@ routes.post('/', /*
     in: 'body',
     description: 'New book data',
     schema: {
-      title: "Harry Potter and the Philosopher's Stone",
+      title: "Harry Potter and the Philosophers Stone",
       isbn: '9780747532699',
       publicationYear: 1997,
       pages: 320,
@@ -39,7 +39,7 @@ routes.put('/:id', /*
     in: 'body',
     description: 'Updated book data',
     schema: {
-      title: "Harry Potter and the Philosopher's Stone",
+      title: "Harry Potter and the Philosophers Stone",
       isbn: '9780747532699',
       publicationYear: 1997,
       pages: 320,
