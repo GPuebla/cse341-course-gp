@@ -1,43 +1,91 @@
-const mongodb = require('../data/db');
-const objectId = require('mongodb').ObjectId;
+const mongodb = require("../data/db");
+const { ObjectId } = require("mongodb");
+const { AppError, catchAsync } = require("../utils/errors");
 
-const getAllAuthors = async (req, res) => {
-  const result = await mongodb.getDatabase().collection('authors').find();
-  result.toArray().then((authors) => {
-    res.setHeader('Content-Type', 'application/json');
-    res.status(200).json(authors);
-  });
-};
+// GET /authors
+const getAllAuthors = catchAsync(async (req, res, next) => {
+  const authors = await mongodb
+    .getDatabase()
+    .collection("authors")
+    .find()
+    .toArray();
 
-const getAuthorById = async (req, res) => {
-  const authorId = new objectId(req.params.id);
-  const result = await mongodb.getDatabase().collection('authors').findOne({ _id: authorId });
-  res.setHeader('Content-Type', 'application/json');
-  res.status(200).json(result);
-};
+  res.status(200).json(authors);
+});
 
-const createAuthor = async (req, res) => {
+// GET /authors/:id
+const getAuthorById = catchAsync(async (req, res, next) => {
+  if (!ObjectId.isValid(req.params.id)) {
+    return next(new AppError("Invalid author id.", 400));
+  }
+  const authorId = new ObjectId(req.params.id);
+
+  const author = await mongodb
+    .getDatabase()
+    .collection("authors")
+    .findOne({ _id: authorId });
+
+  if (!author) {
+    return next(new AppError("Author not found.", 404));
+  }
+
+  res.status(200).json(author);
+});
+
+// POST /authors
+const createAuthor = catchAsync(async (req, res, next) => {
   const author = req.body;
-  const result = await mongodb.getDatabase().collection('authors').insertOne(author);
-  res.setHeader('Content-Type', 'application/json');
+
+  const result = await mongodb
+    .getDatabase()
+    .collection("authors")
+    .insertOne(author);
+
   res.status(201).json(result);
-}
+});
 
-const updateAuthor = async (req, res) => {
-  const authorId = new objectId(req.params.id);
+// PUT /authors/:id
+const updateAuthor = catchAsync(async (req, res, next) => {
+  if (!ObjectId.isValid(req.params.id)) {
+    return next(new AppError("Invalid author id.", 400));
+  }
+  const authorId = new ObjectId(req.params.id);
+
   const author = req.body;
-  const result = await mongodb.getDatabase().collection('authors').updateOne
-({ _id: authorId }, { $set: author });
-  res.setHeader('Content-Type', 'application/json');
-  res.status(200).json(result);
-}
 
-const deleteAuthor = async (req, res) => {
-  const authorId = new objectId(req.params.id);
-  const result = await mongodb.getDatabase().collection('authors').deleteOne({ _id: authorId });
-  res.setHeader('Content-Type', 'application/json');
+  const result = await mongodb
+    .getDatabase()
+    .collection("authors")
+    .updateOne(
+      { _id: authorId },
+      { $set: author }
+    );
+
+  if (result.matchedCount === 0) {
+    return next(new AppError("Author not found.", 404));
+  }
+
   res.status(200).json(result);
-}
+});
+
+// DELETE /authors/:id
+const deleteAuthor = catchAsync(async (req, res, next) => {
+  if (!ObjectId.isValid(req.params.id)) {
+    return next(new AppError("Invalid author id.", 400));
+  }
+  const authorId = new ObjectId(req.params.id);
+
+  const result = await mongodb
+    .getDatabase()
+    .collection("authors")
+    .deleteOne({ _id: authorId });
+
+  if (result.deletedCount === 0) {
+    return next(new AppError("Author not found.", 404));
+  }
+
+  res.status(200).json(result);
+});
 
 module.exports = {
   getAllAuthors,
