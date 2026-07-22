@@ -1,5 +1,7 @@
 const routes = require('express').Router();
 const booksController = require('../controllers/books');
+const validate = require('../middlewares/validate');
+const { bookSchema } = require('../validators/book.schema');
 
 // Get all books
 routes.get('/', /*
@@ -55,7 +57,7 @@ routes.get('/:id', /*
 booksController.getBookById);
 
 // Create a new book
-routes.post('/', /*
+routes.post('/', validate(bookSchema), /*
   #swagger.tags = ['Books']
   #swagger.summary = 'Create a book'
   #swagger.description = 'Creates a new book.'
@@ -77,7 +79,7 @@ routes.post('/', /*
 booksController.createBook);
 
 // Update a book
-routes.put('/:id', /*
+routes.put('/:id', validate(bookSchema), /*
   #swagger.tags = ['Books']
   #swagger.summary = 'Update a book'
   #swagger.description = 'Updates an existing book.'
