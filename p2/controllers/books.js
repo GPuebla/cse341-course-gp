@@ -17,6 +17,26 @@ const getBookById = async (req, res) => {
   res.status(200).json(result);
 };
 
+const getBooksByAuthorId = async (req, res) => {
+  const authorId = req.params.authorId;
+  const result = await mongodb.getDatabase().collection('books').find({ authorId: authorId });
+  result.toArray().then((books) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json(books);
+  });
+};
+
+const getBooksByCategoryId = async (req, res) => {
+  const categoryId = req.params.categoryId;
+  const result = await mongodb.getDatabase().collection('books').find({ categoryId: categoryId });
+  result.toArray().then((books) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json(books);
+  });
+};
+
+
+
 const createBook = async (req, res) => {
   const book = req.body;
   const result = await mongodb.getDatabase().collection('books').insertOne(book);
