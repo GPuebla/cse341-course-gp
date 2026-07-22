@@ -1,9 +1,12 @@
 const routes = require('express').Router();
 
+// Welcome / health check
 routes.get('/', /*
   #swagger.tags = ['Welcome']
+  #swagger.summary = 'Welcome route'
   #swagger.description = 'Welcome route / health check for the API.'
-*/ (req, res) => {
+*/
+(req, res) => {
   res.send('Welcome to the Books API!');
 });
 
