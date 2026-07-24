@@ -1,5 +1,7 @@
 const routes = require('express').Router();
 const categoriesController = require('../controllers/categories');
+const validate = require('../middlewares/validate');
+const { categorySchema } = require('../validators/category.schema');
 
 // Get all categories
 routes.get('/', /*
@@ -25,7 +27,7 @@ routes.get('/:id', /*
 categoriesController.getCategoryById);
 
 // Create a new category
-routes.post('/', /*
+routes.post('/', validate(categorySchema), /*
   #swagger.tags = ['Categories']
   #swagger.summary = 'Create a category'
   #swagger.description = 'Creates a new category.'
@@ -41,7 +43,7 @@ routes.post('/', /*
 categoriesController.createCategory);
 
 // Update a category
-routes.put('/:id', /*
+routes.put('/:id', validate(categorySchema), /*
   #swagger.tags = ['Categories']
   #swagger.summary = 'Update a category'
   #swagger.description = 'Updates an existing category.'

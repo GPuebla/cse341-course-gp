@@ -1,5 +1,7 @@
 const routes = require('express').Router();
 const authorsController = require('../controllers/authors');
+const validate = require('../middlewares/validate');
+const { authorSchema } = require('../validators/author.schema');
 
 // Get all authors
 routes.get('/', /*
@@ -25,7 +27,7 @@ routes.get('/:id', /*
 authorsController.getAuthorById);
 
 // Create a new author
-routes.post('/', /*
+routes.post('/', validate(authorSchema), /*
   #swagger.tags = ['Authors']
   #swagger.summary = 'Create an author'
   #swagger.description = 'Creates a new author.'
@@ -47,7 +49,7 @@ routes.post('/', /*
 authorsController.createAuthor);
 
 // Update an author
-routes.put('/:id', /*
+routes.put('/:id', validate(authorSchema), /*
   #swagger.tags = ['Authors']
   #swagger.summary = 'Update an author'
   #swagger.description = 'Updates an existing author.'
