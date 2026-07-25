@@ -7,12 +7,9 @@
   },
   "host": "localhost:5000",
   "basePath": "/",
-  "tags": [],
   "schemes": [
     "http"
   ],
-  "consumes": [],
-  "produces": [],
   "paths": {
     "/": {
       "get": {
@@ -21,8 +18,11 @@
         ],
         "summary": "Welcome route",
         "description": "Welcome route / health check for the API.",
-        "parameters": [],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/books/": {
@@ -32,8 +32,11 @@
         ],
         "summary": "Get all books",
         "description": "Returns the complete list of books.",
-        "parameters": [],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       },
       "post": {
         "tags": [
@@ -82,7 +85,11 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
       }
     },
     "/books/author/{authorId}": {
@@ -102,7 +109,11 @@
             "example": "6a5fcf35bbd9c1e51975510d"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/books/category/{categoryId}": {
@@ -122,7 +133,11 @@
             "example": "6a610012beb4c4d3b32c9b50"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/books/{id}": {
@@ -142,7 +157,11 @@
             "example": "6a700001aed1842b4a131001"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       },
       "put": {
         "tags": [
@@ -199,7 +218,11 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       },
       "delete": {
         "tags": [
@@ -217,7 +240,11 @@
             "example": "6a700001aed1842b4a131001"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/authors/": {
@@ -227,8 +254,11 @@
         ],
         "summary": "Get all authors",
         "description": "Returns the complete list of authors.",
-        "parameters": [],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       },
       "post": {
         "tags": [
@@ -277,7 +307,11 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
       }
     },
     "/authors/{id}": {
@@ -297,7 +331,11 @@
             "example": "6a5fcf35bbd9c1e51975510d"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       },
       "put": {
         "tags": [
@@ -354,7 +392,11 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       },
       "delete": {
         "tags": [
@@ -372,7 +414,11 @@
             "example": "6a5fcf35bbd9c1e51975510d"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/categories/": {
@@ -382,8 +428,11 @@
         ],
         "summary": "Get all categories",
         "description": "Returns the complete list of categories.",
-        "parameters": [],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       },
       "post": {
         "tags": [
@@ -408,7 +457,11 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
       }
     },
     "/categories/{id}": {
@@ -428,7 +481,11 @@
             "example": "6a610012beb4c4d3b32c9b50"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       },
       "put": {
         "tags": [
@@ -461,7 +518,11 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       },
       "delete": {
         "tags": [
@@ -479,9 +540,12 @@
             "example": "6a610012beb4c4d3b32c9b50"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     }
-  },
-  "definitions": {}
+  }
 }
