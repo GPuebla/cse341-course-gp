@@ -2,6 +2,9 @@ const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 
 const mongodb = require('./data/db.js');
+const { AppError } = require('./utils/errors'); 
+const errorHandler = require('./middlewares/errorHandler');
+
 const app = express();
 
 app.set('trust proxy', 1);
@@ -31,6 +34,12 @@ try {
 }
 
 app.use('/', routes);
+
+app.use((req, res, next) => {
+  next(new AppError(`Route ${req.originalUrl} not found`, 404));
+});
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
