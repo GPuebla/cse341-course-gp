@@ -34,6 +34,9 @@ const getBookById = catchAsync(async (req, res, next) => {
 
 // GET /books/author/:authorId
 const getBooksByAuthorId = catchAsync(async (req, res, next) => {
+  if (!ObjectId.isValid(req.params.authorId)) {
+    return next(new AppError("Invalid author id.", 400));
+  }
   const authorId = new ObjectId(req.params.authorId);
 
   const books = await mongodb
@@ -47,6 +50,9 @@ const getBooksByAuthorId = catchAsync(async (req, res, next) => {
 
 // GET /books/category/:categoryId
 const getBooksByCategoryId = catchAsync(async (req, res, next) => {
+  if (!ObjectId.isValid(req.params.categoryId)) {
+    return next(new AppError("Invalid category id.", 400));
+  }
   const categoryId = new ObjectId(req.params.categoryId);
 
   const books = await mongodb

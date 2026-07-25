@@ -1,0 +1,487 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Books API",
+    "description": "API for managing books - CSE 341",
+    "version": "1.0.0"
+  },
+  "host": "localhost:5000",
+  "basePath": "/",
+  "tags": [],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [],
+  "produces": [],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "Welcome"
+        ],
+        "summary": "Welcome route",
+        "description": "Welcome route / health check for the API.",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/books/": {
+      "get": {
+        "tags": [
+          "Books"
+        ],
+        "summary": "Get all books",
+        "description": "Returns the complete list of books.",
+        "parameters": [],
+        "responses": {}
+      },
+      "post": {
+        "tags": [
+          "Books"
+        ],
+        "summary": "Create a book",
+        "description": "Creates a new book.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Book information",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Harry Potter and the Philosopher's Stone"
+                },
+                "isbn": {
+                  "type": "string",
+                  "example": "9780747532699"
+                },
+                "publicationYear": {
+                  "type": "number",
+                  "example": 1997
+                },
+                "pages": {
+                  "type": "number",
+                  "example": 320
+                },
+                "available": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "authorId": {
+                  "type": "string",
+                  "example": "6a5fcf35bbd9c1e51975510d"
+                },
+                "categoryId": {
+                  "type": "string",
+                  "example": "6a610012beb4c4d3b32c9b50"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/books/author/{authorId}": {
+      "get": {
+        "tags": [
+          "Books"
+        ],
+        "summary": "Get books by author",
+        "description": "Returns all books written by the specified author.",
+        "parameters": [
+          {
+            "name": "authorId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Author MongoDB ObjectId",
+            "example": "6a5fcf35bbd9c1e51975510d"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/books/category/{categoryId}": {
+      "get": {
+        "tags": [
+          "Books"
+        ],
+        "summary": "Get books by category",
+        "description": "Returns all books that belong to the specified category.",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Category MongoDB ObjectId",
+            "example": "6a610012beb4c4d3b32c9b50"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/books/{id}": {
+      "get": {
+        "tags": [
+          "Books"
+        ],
+        "summary": "Get book by id",
+        "description": "Returns a single book by its MongoDB ObjectId.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Book MongoDB ObjectId",
+            "example": "6a700001aed1842b4a131001"
+          }
+        ],
+        "responses": {}
+      },
+      "put": {
+        "tags": [
+          "Books"
+        ],
+        "summary": "Update a book",
+        "description": "Updates an existing book.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Book MongoDB ObjectId",
+            "example": "6a700001aed1842b4a131001"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Updated book information",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Harry Potter and the Philosopher's Stone"
+                },
+                "isbn": {
+                  "type": "string",
+                  "example": "9780747532699"
+                },
+                "publicationYear": {
+                  "type": "number",
+                  "example": 1997
+                },
+                "pages": {
+                  "type": "number",
+                  "example": 320
+                },
+                "available": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "authorId": {
+                  "type": "string",
+                  "example": "6a5fcf35bbd9c1e51975510d"
+                },
+                "categoryId": {
+                  "type": "string",
+                  "example": "6a610012beb4c4d3b32c9b50"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "delete": {
+        "tags": [
+          "Books"
+        ],
+        "summary": "Delete a book",
+        "description": "Deletes a book by its MongoDB ObjectId.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Book MongoDB ObjectId",
+            "example": "6a700001aed1842b4a131001"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/authors/": {
+      "get": {
+        "tags": [
+          "Authors"
+        ],
+        "summary": "Get all authors",
+        "description": "Returns the complete list of authors.",
+        "parameters": [],
+        "responses": {}
+      },
+      "post": {
+        "tags": [
+          "Authors"
+        ],
+        "summary": "Create an author",
+        "description": "Creates a new author.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Author information",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string",
+                  "example": "Penelope"
+                },
+                "lastName": {
+                  "type": "string",
+                  "example": "Rowling"
+                },
+                "nationality": {
+                  "type": "string",
+                  "example": "Mexican"
+                },
+                "birthDate": {
+                  "type": "string",
+                  "example": "1978-07-06"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "penelope@example.com"
+                },
+                "biography": {
+                  "type": "string",
+                  "example": "Author of the many books."
+                },
+                "active": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/authors/{id}": {
+      "get": {
+        "tags": [
+          "Authors"
+        ],
+        "summary": "Get author by id",
+        "description": "Returns a single author by their MongoDB ObjectId.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Author MongoDB ObjectId",
+            "example": "6a5fcf35bbd9c1e51975510d"
+          }
+        ],
+        "responses": {}
+      },
+      "put": {
+        "tags": [
+          "Authors"
+        ],
+        "summary": "Update an author",
+        "description": "Updates an existing author.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Author MongoDB ObjectId",
+            "example": "6a5fcf35bbd9c1e51975510d"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Updated author information",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string",
+                  "example": "Penelope"
+                },
+                "lastName": {
+                  "type": "string",
+                  "example": "Rowling"
+                },
+                "nationality": {
+                  "type": "string",
+                  "example": "Mexican"
+                },
+                "birthDate": {
+                  "type": "string",
+                  "example": "1978-07-31"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "penelope@example.com"
+                },
+                "biography": {
+                  "type": "string",
+                  "example": "Author of the many books."
+                },
+                "active": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "delete": {
+        "tags": [
+          "Authors"
+        ],
+        "summary": "Delete an author",
+        "description": "Deletes an author by their MongoDB ObjectId.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Author MongoDB ObjectId",
+            "example": "6a5fcf35bbd9c1e51975510d"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/categories/": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Get all categories",
+        "description": "Returns the complete list of categories.",
+        "parameters": [],
+        "responses": {}
+      },
+      "post": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Create a category",
+        "description": "Creates a new category.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Category information",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Science Fiction"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/categories/{id}": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Get category by id",
+        "description": "Returns a single category by its MongoDB ObjectId.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Category MongoDB ObjectId",
+            "example": "6a610012beb4c4d3b32c9b50"
+          }
+        ],
+        "responses": {}
+      },
+      "put": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Update a category",
+        "description": "Updates an existing category.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Category MongoDB ObjectId",
+            "example": "6a610012beb4c4d3b32c9b50"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Updated category information",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Science Fiction"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "delete": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Delete a category",
+        "description": "Deletes a category by its MongoDB ObjectId.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Category MongoDB ObjectId",
+            "example": "6a610012beb4c4d3b32c9b50"
+          }
+        ],
+        "responses": {}
+      }
+    }
+  },
+  "definitions": {}
+}
