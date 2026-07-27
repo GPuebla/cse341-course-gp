@@ -10,6 +10,7 @@ routes.get('/', /*
   res.send('Welcome to the Books API!');
 });
 
+routes.use('/auth', require('./auth'));
 routes.use('/books', require('./books'));
 routes.use('/authors', require('./authors'));
 routes.use('/categories', require('./categories'));

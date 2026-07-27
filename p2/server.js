@@ -1,14 +1,35 @@
 const express = require('express');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const swaggerUi = require('swagger-ui-express');
 
 const mongodb = require('./data/db.js');
-const { AppError } = require('./utils/errors'); 
+const passport = require('./config/passport');
+const { AppError } = require('./utils/errors');
 const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
 
 app.set('trust proxy', 1);
 app.use(express.json());
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.MONGODB_URL }),
+    cookie: {
+      maxAge: 24 * 60 * 60 * 1000, // 1 day
+      secure: !!process.env.RENDER_EXTERNAL_HOSTNAME,
+      sameSite: 'lax',
+    },
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 const routes = require('./routes/index');
 
 try {

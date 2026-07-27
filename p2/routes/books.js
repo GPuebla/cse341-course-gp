@@ -1,6 +1,7 @@
 const routes = require('express').Router();
 const booksController = require('../controllers/books');
 const validate = require('../middlewares/validate');
+const ensureAuth = require('../middlewares/ensureAuth');
 const { bookSchema } = require('../validators/book.schema');
 
 // Get all books
@@ -57,10 +58,11 @@ routes.get('/:id', /*
 booksController.getBookById);
 
 // Create a new book
-routes.post('/', validate(bookSchema), /*
+routes.post('/', ensureAuth, validate(bookSchema), /*
   #swagger.tags = ['Books']
   #swagger.summary = 'Create a book'
-  #swagger.description = 'Creates a new book.'
+  #swagger.description = 'Creates a new book. Requires an active GitHub-authenticated session.'
+  #swagger.security = [{ "sessionAuth": [] }]
   #swagger.parameters['body'] = {
     in: 'body',
     required: true,
@@ -79,10 +81,11 @@ routes.post('/', validate(bookSchema), /*
 booksController.createBook);
 
 // Update a book
-routes.put('/:id', validate(bookSchema), /*
+routes.put('/:id', ensureAuth, validate(bookSchema), /*
   #swagger.tags = ['Books']
   #swagger.summary = 'Update a book'
-  #swagger.description = 'Updates an existing book.'
+  #swagger.description = 'Updates an existing book. Requires an active GitHub-authenticated session.'
+  #swagger.security = [{ "sessionAuth": [] }]
   #swagger.parameters['id'] = {
     in: 'path',
     description: 'Book MongoDB ObjectId',
@@ -108,10 +111,11 @@ routes.put('/:id', validate(bookSchema), /*
 booksController.updateBook);
 
 // Delete a book
-routes.delete('/:id', /*
+routes.delete('/:id', ensureAuth, /*
   #swagger.tags = ['Books']
   #swagger.summary = 'Delete a book'
-  #swagger.description = 'Deletes a book by its MongoDB ObjectId.'
+  #swagger.description = 'Deletes a book by its MongoDB ObjectId. Requires an active GitHub-authenticated session.'
+  #swagger.security = [{ "sessionAuth": [] }]
   #swagger.parameters['id'] = {
     in: 'path',
     description: 'Book MongoDB ObjectId',

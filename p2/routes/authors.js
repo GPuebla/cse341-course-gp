@@ -1,6 +1,7 @@
 const routes = require('express').Router();
 const authorsController = require('../controllers/authors');
 const validate = require('../middlewares/validate');
+const ensureAuth = require('../middlewares/ensureAuth');
 const { authorSchema } = require('../validators/author.schema');
 
 // Get all authors
@@ -27,10 +28,11 @@ routes.get('/:id', /*
 authorsController.getAuthorById);
 
 // Create a new author
-routes.post('/', validate(authorSchema), /*
+routes.post('/', ensureAuth, validate(authorSchema), /*
   #swagger.tags = ['Authors']
   #swagger.summary = 'Create an author'
-  #swagger.description = 'Creates a new author.'
+  #swagger.description = 'Creates a new author. Requires an active GitHub-authenticated session.'
+  #swagger.security = [{ "sessionAuth": [] }]
   #swagger.parameters['body'] = {
     in: 'body',
     required: true,
@@ -49,10 +51,11 @@ routes.post('/', validate(authorSchema), /*
 authorsController.createAuthor);
 
 // Update an author
-routes.put('/:id', validate(authorSchema), /*
+routes.put('/:id', ensureAuth, validate(authorSchema), /*
   #swagger.tags = ['Authors']
   #swagger.summary = 'Update an author'
-  #swagger.description = 'Updates an existing author.'
+  #swagger.description = 'Updates an existing author. Requires an active GitHub-authenticated session.'
+  #swagger.security = [{ "sessionAuth": [] }]
   #swagger.parameters['id'] = {
     in: 'path',
     description: 'Author MongoDB ObjectId',
@@ -78,10 +81,11 @@ routes.put('/:id', validate(authorSchema), /*
 authorsController.updateAuthor);
 
 // Delete an author
-routes.delete('/:id', /*
+routes.delete('/:id', ensureAuth, /*
   #swagger.tags = ['Authors']
   #swagger.summary = 'Delete an author'
-  #swagger.description = 'Deletes an author by their MongoDB ObjectId.'
+  #swagger.description = 'Deletes an author by their MongoDB ObjectId. Requires an active GitHub-authenticated session.'
+  #swagger.security = [{ "sessionAuth": [] }]
   #swagger.parameters['id'] = {
     in: 'path',
     description: 'Author MongoDB ObjectId',

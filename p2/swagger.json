@@ -10,7 +10,93 @@
   "schemes": [
     "http"
   ],
+  "securityDefinitions": {
+    "sessionAuth": {
+      "type": "apiKey",
+      "in": "cookie",
+      "name": "connect.sid",
+      "description": "Session cookie set after logging in via GET /auth/github. Log in through a browser first, then use Swagger UI in that SAME browser tab so the cookie is sent automatically with \"Try it out\"."
+    }
+  },
   "paths": {
+    "/auth/github": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Log in with GitHub",
+        "description": "Redirects to GitHub to authorize this app. Open this URL directly in a browser tab (not via Swagger \"Try it out\", which cannot follow the GitHub login redirect).",
+        "responses": {
+          "302": {
+            "description": "Found"
+          }
+        }
+      }
+    },
+    "/auth/github/callback": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "GitHub OAuth callback",
+        "description": "Called automatically by GitHub after authorization. Not meant to be invoked directly.",
+        "responses": {
+          "302": {
+            "description": "Found"
+          }
+        }
+      }
+    },
+    "/auth/failure": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Authentication failure",
+        "description": "Returned when GitHub authorization did not succeed.",
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Log out",
+        "description": "Ends the current session and clears the session cookie.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/auth/profile": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Get current logged-in user",
+        "description": "Returns the profile of the currently authenticated user. Requires an active session — log in via GET /auth/github in a browser first, then call this from the same browser session.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
     "/": {
       "get": {
         "tags": [
@@ -43,7 +129,12 @@
           "Books"
         ],
         "summary": "Create a book",
-        "description": "Creates a new book.",
+        "description": "Creates a new book. Requires an active GitHub-authenticated session.",
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "body",
@@ -168,7 +259,12 @@
           "Books"
         ],
         "summary": "Update a book",
-        "description": "Updates an existing book.",
+        "description": "Updates an existing book. Requires an active GitHub-authenticated session.",
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
@@ -229,7 +325,12 @@
           "Books"
         ],
         "summary": "Delete a book",
-        "description": "Deletes a book by its MongoDB ObjectId.",
+        "description": "Deletes a book by its MongoDB ObjectId. Requires an active GitHub-authenticated session.",
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
@@ -265,7 +366,12 @@
           "Authors"
         ],
         "summary": "Create an author",
-        "description": "Creates a new author.",
+        "description": "Creates a new author. Requires an active GitHub-authenticated session.",
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "body",
@@ -342,7 +448,12 @@
           "Authors"
         ],
         "summary": "Update an author",
-        "description": "Updates an existing author.",
+        "description": "Updates an existing author. Requires an active GitHub-authenticated session.",
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
@@ -403,7 +514,12 @@
           "Authors"
         ],
         "summary": "Delete an author",
-        "description": "Deletes an author by their MongoDB ObjectId.",
+        "description": "Deletes an author by their MongoDB ObjectId. Requires an active GitHub-authenticated session.",
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
@@ -439,7 +555,12 @@
           "Categories"
         ],
         "summary": "Create a category",
-        "description": "Creates a new category.",
+        "description": "Creates a new category. Requires an active GitHub-authenticated session.",
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "body",
@@ -492,7 +613,12 @@
           "Categories"
         ],
         "summary": "Update a category",
-        "description": "Updates an existing category.",
+        "description": "Updates an existing category. Requires an active GitHub-authenticated session.",
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
@@ -529,7 +655,12 @@
           "Categories"
         ],
         "summary": "Delete a category",
-        "description": "Deletes a category by its MongoDB ObjectId.",
+        "description": "Deletes a category by its MongoDB ObjectId. Requires an active GitHub-authenticated session.",
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
