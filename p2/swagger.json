@@ -19,6 +19,20 @@
     }
   },
   "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "Welcome"
+        ],
+        "summary": "Welcome route",
+        "description": "Welcome route / health check for the API.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/auth/github": {
       "get": {
         "tags": [
@@ -27,8 +41,8 @@
         "summary": "Log in with GitHub",
         "description": "Redirects to GitHub to authorize this app. Open this URL directly in a browser tab (not via Swagger \"Try it out\", which cannot follow the GitHub login redirect).",
         "responses": {
-          "302": {
-            "description": "Found"
+          "default": {
+            "description": ""
           }
         }
       }
@@ -41,8 +55,8 @@
         "summary": "GitHub OAuth callback",
         "description": "Called automatically by GitHub after authorization. Not meant to be invoked directly.",
         "responses": {
-          "302": {
-            "description": "Found"
+          "default": {
+            "description": ""
           }
         }
       }
@@ -85,9 +99,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "401": {
-            "description": "Unauthorized"
           }
         },
         "security": [
@@ -95,20 +106,6 @@
             "sessionAuth": []
           }
         ]
-      }
-    },
-    "/": {
-      "get": {
-        "tags": [
-          "Welcome"
-        ],
-        "summary": "Welcome route",
-        "description": "Welcome route / health check for the API.",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
       }
     },
     "/books/": {
@@ -130,11 +127,6 @@
         ],
         "summary": "Create a book",
         "description": "Creates a new book. Requires an active GitHub-authenticated session.",
-        "security": [
-          {
-            "sessionAuth": []
-          }
-        ],
         "parameters": [
           {
             "name": "body",
@@ -180,7 +172,12 @@
           "201": {
             "description": "Created"
           }
-        }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
       }
     },
     "/books/author/{authorId}": {
@@ -260,11 +257,6 @@
         ],
         "summary": "Update a book",
         "description": "Updates an existing book. Requires an active GitHub-authenticated session.",
-        "security": [
-          {
-            "sessionAuth": []
-          }
-        ],
         "parameters": [
           {
             "name": "id",
@@ -318,7 +310,12 @@
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -326,11 +323,6 @@
         ],
         "summary": "Delete a book",
         "description": "Deletes a book by its MongoDB ObjectId. Requires an active GitHub-authenticated session.",
-        "security": [
-          {
-            "sessionAuth": []
-          }
-        ],
         "parameters": [
           {
             "name": "id",
@@ -345,7 +337,12 @@
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
       }
     },
     "/authors/": {
@@ -367,11 +364,6 @@
         ],
         "summary": "Create an author",
         "description": "Creates a new author. Requires an active GitHub-authenticated session.",
-        "security": [
-          {
-            "sessionAuth": []
-          }
-        ],
         "parameters": [
           {
             "name": "body",
@@ -417,7 +409,12 @@
           "201": {
             "description": "Created"
           }
-        }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
       }
     },
     "/authors/{id}": {
@@ -449,11 +446,6 @@
         ],
         "summary": "Update an author",
         "description": "Updates an existing author. Requires an active GitHub-authenticated session.",
-        "security": [
-          {
-            "sessionAuth": []
-          }
-        ],
         "parameters": [
           {
             "name": "id",
@@ -507,7 +499,12 @@
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -515,11 +512,6 @@
         ],
         "summary": "Delete an author",
         "description": "Deletes an author by their MongoDB ObjectId. Requires an active GitHub-authenticated session.",
-        "security": [
-          {
-            "sessionAuth": []
-          }
-        ],
         "parameters": [
           {
             "name": "id",
@@ -534,7 +526,12 @@
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
       }
     },
     "/categories/": {
@@ -556,11 +553,6 @@
         ],
         "summary": "Create a category",
         "description": "Creates a new category. Requires an active GitHub-authenticated session.",
-        "security": [
-          {
-            "sessionAuth": []
-          }
-        ],
         "parameters": [
           {
             "name": "body",
@@ -582,7 +574,12 @@
           "201": {
             "description": "Created"
           }
-        }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
       }
     },
     "/categories/{id}": {
@@ -614,11 +611,6 @@
         ],
         "summary": "Update a category",
         "description": "Updates an existing category. Requires an active GitHub-authenticated session.",
-        "security": [
-          {
-            "sessionAuth": []
-          }
-        ],
         "parameters": [
           {
             "name": "id",
@@ -648,7 +640,12 @@
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -656,11 +653,6 @@
         ],
         "summary": "Delete a category",
         "description": "Deletes a category by its MongoDB ObjectId. Requires an active GitHub-authenticated session.",
-        "security": [
-          {
-            "sessionAuth": []
-          }
-        ],
         "parameters": [
           {
             "name": "id",
@@ -675,7 +667,12 @@
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
       }
     }
   }
