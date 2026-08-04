@@ -1,0 +1,83 @@
+### LOCAL
+
+###GET the message: Welcome to the Books API!
+GET http://localhost:5000/
+
+###GET all the books
+GET http://localhost:5000/books
+
+### GET book by id (6a5e7eedaed1842b4a131922)
+GET http://localhost:5000/books/6a5e7eedaed1842b4a131922
+
+### Create Book
+POST http://localhost:5000/books
+Content-Type: application/json
+
+{
+  "title": "Harry Potter and the Philosopher's Stone",
+  "isbn": "9780747532699",
+  "publicationYear": 1997,
+  "pages": 320,
+  "available": false,
+  "authorId": "2",
+  "categoryId": "2"
+}
+
+### UPDATE Book
+PUT http://localhost:5000/books/6a5e7eedaed1842b4a131922
+Content-Type: application/json
+
+{
+  "title": "Harry Potter and the Philosopher's Stone",
+  "isbn": "9780747532699",
+  "publicationYear": 1997,
+  "pages": 320,
+  "available": true,
+  "authorId": "2",
+  "categoryId": "2"
+}
+
+#### DELETE Book
+DELETE http://localhost:5000/books/6a5e7eedaed1842b4a131922
+
+### RENDER
+
+###GET the message: Welcome to the Books API!
+GET https://cse341-course-gp-ak75.onrender.com/
+
+###GET all the books
+GET https://cse341-course-gp-ak75.onrender.com/books
+
+### GET book by id (6a5e7eedaed1842b4a131922)
+GET https://cse341-course-gp-ak75.onrender.com/books/6a5e7eedaed1842b4a131922
+
+### Create Book
+POST https://cse341-course-gp-ak75.onrender.com/books
+Content-Type: application/json
+
+{
+  "title": "The power of habit",
+  "isbn": "9680747532684",
+  "publicationYear": 2003,
+  "pages": 318,
+  "available": false,
+  "authorId": "3",
+  "categoryId": "2"
+}
+
+### UPDATE Book
+PUT https://cse341-course-gp-ak75.onrender.com/books/6a5e7eedaed1842b4a131922
+Content-Type: application/json
+
+{
+  "title": "Harry Potter and the Philosopher's Stone",
+  "isbn": "9780747532699",
+  "publicationYear": 1997,
+  "pages": 320,
+  "available": true,
+  "authorId": "2",
+  "categoryId": "2"
+}
+
+#### DELETE Book
+DELETE https://cse341-course-gp-ak75.onrender.com/books/6a5e7eedaed1842b4a131922

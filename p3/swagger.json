@@ -1,0 +1,679 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Books API",
+    "description": "API for managing books - CSE 341",
+    "version": "1.0.0"
+  },
+  "host": "localhost:5000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "sessionAuth": {
+      "type": "apiKey",
+      "in": "cookie",
+      "name": "connect.sid",
+      "description": "Session cookie set after logging in via GET /auth/github. Log in through a browser first, then use Swagger UI in that SAME browser tab so the cookie is sent automatically with \"Try it out\"."
+    }
+  },
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "Welcome"
+        ],
+        "summary": "Welcome route",
+        "description": "Welcome route / health check for the API.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/auth/github": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Log in with GitHub",
+        "description": "Redirects to GitHub to authorize this app. Open this URL directly in a browser tab (not via Swagger \"Try it out\", which cannot follow the GitHub login redirect).",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/github/callback": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "GitHub OAuth callback",
+        "description": "Called automatically by GitHub after authorization. Not meant to be invoked directly.",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/failure": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Authentication failure",
+        "description": "Returned when GitHub authorization did not succeed.",
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Log out",
+        "description": "Ends the current session and clears the session cookie.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/auth/profile": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Get current logged-in user",
+        "description": "Returns the profile of the currently authenticated user. Requires an active session — log in via GET /auth/github in a browser first, then call this from the same browser session.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/books/": {
+      "get": {
+        "tags": [
+          "Books"
+        ],
+        "summary": "Get all books",
+        "description": "Returns the complete list of books.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Books"
+        ],
+        "summary": "Create a book",
+        "description": "Creates a new book. Requires an active GitHub-authenticated session.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Book information",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Harry Potter and the Philosopher's Stone"
+                },
+                "isbn": {
+                  "type": "string",
+                  "example": "9780747532699"
+                },
+                "publicationYear": {
+                  "type": "number",
+                  "example": 1997
+                },
+                "pages": {
+                  "type": "number",
+                  "example": 320
+                },
+                "available": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "authorId": {
+                  "type": "string",
+                  "example": "6a5fcf35bbd9c1e51975510d"
+                },
+                "categoryId": {
+                  "type": "string",
+                  "example": "6a610012beb4c4d3b32c9b50"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/books/author/{authorId}": {
+      "get": {
+        "tags": [
+          "Books"
+        ],
+        "summary": "Get books by author",
+        "description": "Returns all books written by the specified author.",
+        "parameters": [
+          {
+            "name": "authorId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Author MongoDB ObjectId",
+            "example": "6a5fcf35bbd9c1e51975510d"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/books/category/{categoryId}": {
+      "get": {
+        "tags": [
+          "Books"
+        ],
+        "summary": "Get books by category",
+        "description": "Returns all books that belong to the specified category.",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Category MongoDB ObjectId",
+            "example": "6a610012beb4c4d3b32c9b50"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/books/{id}": {
+      "get": {
+        "tags": [
+          "Books"
+        ],
+        "summary": "Get book by id",
+        "description": "Returns a single book by its MongoDB ObjectId.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Book MongoDB ObjectId",
+            "example": "6a700001aed1842b4a131001"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Books"
+        ],
+        "summary": "Update a book",
+        "description": "Updates an existing book. Requires an active GitHub-authenticated session.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Book MongoDB ObjectId",
+            "example": "6a700001aed1842b4a131001"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Updated book information",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Harry Potter and the Philosopher's Stone"
+                },
+                "isbn": {
+                  "type": "string",
+                  "example": "9780747532699"
+                },
+                "publicationYear": {
+                  "type": "number",
+                  "example": 1997
+                },
+                "pages": {
+                  "type": "number",
+                  "example": 320
+                },
+                "available": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "authorId": {
+                  "type": "string",
+                  "example": "6a5fcf35bbd9c1e51975510d"
+                },
+                "categoryId": {
+                  "type": "string",
+                  "example": "6a610012beb4c4d3b32c9b50"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Books"
+        ],
+        "summary": "Delete a book",
+        "description": "Deletes a book by its MongoDB ObjectId. Requires an active GitHub-authenticated session.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Book MongoDB ObjectId",
+            "example": "6a700001aed1842b4a131001"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/authors/": {
+      "get": {
+        "tags": [
+          "Authors"
+        ],
+        "summary": "Get all authors",
+        "description": "Returns the complete list of authors.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Authors"
+        ],
+        "summary": "Create an author",
+        "description": "Creates a new author. Requires an active GitHub-authenticated session.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Author information",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string",
+                  "example": "Penelope"
+                },
+                "lastName": {
+                  "type": "string",
+                  "example": "Rowling"
+                },
+                "nationality": {
+                  "type": "string",
+                  "example": "Mexican"
+                },
+                "birthDate": {
+                  "type": "string",
+                  "example": "1978-07-06"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "penelope@example.com"
+                },
+                "biography": {
+                  "type": "string",
+                  "example": "Author of the many books."
+                },
+                "active": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/authors/{id}": {
+      "get": {
+        "tags": [
+          "Authors"
+        ],
+        "summary": "Get author by id",
+        "description": "Returns a single author by their MongoDB ObjectId.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Author MongoDB ObjectId",
+            "example": "6a5fcf35bbd9c1e51975510d"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Authors"
+        ],
+        "summary": "Update an author",
+        "description": "Updates an existing author. Requires an active GitHub-authenticated session.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Author MongoDB ObjectId",
+            "example": "6a5fcf35bbd9c1e51975510d"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Updated author information",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string",
+                  "example": "Penelope"
+                },
+                "lastName": {
+                  "type": "string",
+                  "example": "Rowling"
+                },
+                "nationality": {
+                  "type": "string",
+                  "example": "Mexican"
+                },
+                "birthDate": {
+                  "type": "string",
+                  "example": "1978-07-31"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "penelope@example.com"
+                },
+                "biography": {
+                  "type": "string",
+                  "example": "Author of the many books."
+                },
+                "active": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Authors"
+        ],
+        "summary": "Delete an author",
+        "description": "Deletes an author by their MongoDB ObjectId. Requires an active GitHub-authenticated session.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Author MongoDB ObjectId",
+            "example": "6a5fcf35bbd9c1e51975510d"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/categories/": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Get all categories",
+        "description": "Returns the complete list of categories.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Create a category",
+        "description": "Creates a new category. Requires an active GitHub-authenticated session.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Category information",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Science Fiction"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/categories/{id}": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Get category by id",
+        "description": "Returns a single category by its MongoDB ObjectId.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Category MongoDB ObjectId",
+            "example": "6a610012beb4c4d3b32c9b50"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Update a category",
+        "description": "Updates an existing category. Requires an active GitHub-authenticated session.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Category MongoDB ObjectId",
+            "example": "6a610012beb4c4d3b32c9b50"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Updated category information",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Science Fiction"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Delete a category",
+        "description": "Deletes a category by its MongoDB ObjectId. Requires an active GitHub-authenticated session.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Category MongoDB ObjectId",
+            "example": "6a610012beb4c4d3b32c9b50"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    }
+  }
+}
