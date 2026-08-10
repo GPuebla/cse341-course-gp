@@ -3,8 +3,7 @@ dotenv.config();
 
 const passport = require('passport');
 const GitHubStrategy = require('passport-github2').Strategy;
-const { ObjectId } = require('mongodb');
-const mongodb = require('../data/db');
+const User = require('../models/User');
 
 passport.use(
   new GitHubStrategy(
@@ -15,10 +14,8 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        const users = mongodb.getDatabase().collection('users');
-
         // Upsert: first login creates the account, later logins just refresh the profile fields.
-        const user = await users.findOneAndUpdate(
+        const user = await User.findOneAndUpdate(
           { githubId: profile.id },
           {
             $set: {
@@ -29,10 +26,9 @@ passport.use(
             },
             $setOnInsert: {
               githubId: profile.id,
-              createdAt: new Date(),
             },
           },
-          { upsert: true, returnDocument: 'after' }
+          { upsert: true, new: true }
         );
 
         done(null, user);
@@ -51,8 +47,7 @@ passport.serializeUser((user, done) => {
 // On every request, the id from the cookie is turned back into a full user doc.
 passport.deserializeUser(async (id, done) => {
   try {
-    const users = mongodb.getDatabase().collection('users');
-    const user = await users.findOne({ _id: new ObjectId(id) });
+    const user = await User.findById(id);
     done(null, user);
   } catch (err) {
     done(err, null);

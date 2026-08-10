@@ -1,6 +1,6 @@
 // GET /auth/github/callback (runs after passport.authenticate('github') succeeds)
 const githubCallback = (req, res) => {
-  res.redirect('/auth/profile');
+  res.redirect('/auth/user');
 };
 
 // GET /auth/failure
@@ -20,8 +20,8 @@ const logout = (req, res, next) => {
   });
 };
 
-// GET /auth/profile
-const profile = (req, res) => {
+// GET /auth/user (protected by ensureAuth, which returns 401 when not logged in)
+const getCurrentUser = (req, res) => {
   const { _id, githubId, username, displayName, email, avatarUrl, createdAt } = req.user;
 
   res.status(200).json({ _id, githubId, username, displayName, email, avatarUrl, createdAt });
@@ -31,5 +31,5 @@ module.exports = {
   githubCallback,
   failure,
   logout,
-  profile,
+  getCurrentUser,
 };

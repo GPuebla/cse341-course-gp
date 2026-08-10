@@ -1,83 +1,126 @@
 ### LOCAL
+### NOTE: Customers/Quotations/Carriers/Ports all require an authenticated session.
+### Open GET {{local}}/auth/github in a browser first (not via "Send Request"),
+### then use a REST client that shares that browser's cookie jar, or copy the
+### connect.sid cookie into a `Cookie` header below.
 
-###GET the message: Welcome to the Books API!
-GET http://localhost:5000/
+@local = http://localhost:5000
 
-###GET all the books
-GET http://localhost:5000/books
+### GET the welcome / health check message
+GET {{local}}/
 
-### GET book by id (6a5e7eedaed1842b4a131922)
-GET http://localhost:5000/books/6a5e7eedaed1842b4a131922
+### Start GitHub OAuth login (open in a browser)
+GET {{local}}/auth/github
 
-### Create Book
-POST http://localhost:5000/books
+### GET the logged-in user
+GET {{local}}/auth/user
+
+### Log out
+GET {{local}}/auth/logout
+
+### --- Carriers ---
+
+### GET all carriers
+GET {{local}}/carriers
+
+### CREATE a carrier
+POST {{local}}/carriers
 Content-Type: application/json
 
 {
-  "title": "Harry Potter and the Philosopher's Stone",
-  "isbn": "9780747532699",
-  "publicationYear": 1997,
-  "pages": 320,
-  "available": false,
-  "authorId": "2",
-  "categoryId": "2"
+  "name": "Maersk",
+  "scacCode": "MAEU",
+  "contactEmail": "contact@maersk.com",
+  "phone": "+45 33 63 33 63",
+  "website": "https://www.maersk.com"
 }
 
-### UPDATE Book
-PUT http://localhost:5000/books/6a5e7eedaed1842b4a131922
+### --- Ports ---
+
+### GET all ports
+GET {{local}}/ports
+
+### CREATE a port
+POST {{local}}/ports
 Content-Type: application/json
 
 {
-  "title": "Harry Potter and the Philosopher's Stone",
-  "isbn": "9780747532699",
-  "publicationYear": 1997,
-  "pages": 320,
-  "available": true,
-  "authorId": "2",
-  "categoryId": "2"
+  "name": "Puerto de Buenos Aires",
+  "unlocode": "ARBUE",
+  "country": "Argentina"
 }
 
-#### DELETE Book
-DELETE http://localhost:5000/books/6a5e7eedaed1842b4a131922
+### --- Customers ---
+
+### GET all customers
+GET {{local}}/customers
+
+### CREATE a customer
+POST {{local}}/customers
+Content-Type: application/json
+
+{
+  "name": "Ana Torres",
+  "email": "ana.torres@example.com",
+  "phone": "+54 11 5555-0100",
+  "company": "Torres Import/Export S.A."
+}
+
+### --- Quotations ---
+
+### GET all quotations
+GET {{local}}/quotations
+
+### GET quotations for a customer
+GET {{local}}/quotations/customer/REPLACE_WITH_CUSTOMER_ID
+
+### CREATE a quotation
+POST {{local}}/quotations
+Content-Type: application/json
+
+{
+  "customerId": "REPLACE_WITH_CUSTOMER_ID",
+  "carrierId": "REPLACE_WITH_CARRIER_ID",
+  "origin": "Puerto de Buenos Aires",
+  "destination": "Port of Rotterdam",
+  "cargoType": "general",
+  "weight": 12000,
+  "volume": 28.5,
+  "rate": 2450,
+  "currency": "USD",
+  "status": "draft",
+  "validUntil": "2026-12-31"
+}
+
+### UPDATE only the status of a quotation
+PUT {{local}}/quotations/REPLACE_WITH_QUOTATION_ID/status
+Content-Type: application/json
+
+{
+  "status": "sent"
+}
+
+### DELETE a quotation
+DELETE {{local}}/quotations/REPLACE_WITH_QUOTATION_ID
+
 
 ### RENDER
+@render = https://cse341-course-gp-9bp4.onrender.com
 
-###GET the message: Welcome to the Books API!
-GET https://cse341-course-gp-ak75.onrender.com/
+### GET the welcome / health check message
+GET {{render}}/
 
-###GET all the books
-GET https://cse341-course-gp-ak75.onrender.com/books
+### Start GitHub OAuth login (open in a browser)
+GET {{render}}/auth/github
 
-### GET book by id (6a5e7eedaed1842b4a131922)
-GET https://cse341-course-gp-ak75.onrender.com/books/6a5e7eedaed1842b4a131922
+### GET all carriers
+GET {{render}}/carriers
 
-### Create Book
-POST https://cse341-course-gp-ak75.onrender.com/books
-Content-Type: application/json
+### GET all ports
+GET {{render}}/ports
 
-{
-  "title": "The power of habit",
-  "isbn": "9680747532684",
-  "publicationYear": 2003,
-  "pages": 318,
-  "available": false,
-  "authorId": "3",
-  "categoryId": "2"
-}
+### GET all customers
+GET {{render}}/customers
 
-### UPDATE Book
-PUT https://cse341-course-gp-ak75.onrender.com/books/6a5e7eedaed1842b4a131922
-Content-Type: application/json
-
-{
-  "title": "Harry Potter and the Philosopher's Stone",
-  "isbn": "9780747532699",
-  "publicationYear": 1997,
-  "pages": 320,
-  "available": true,
-  "authorId": "2",
-  "categoryId": "2"
-}
-
-#### DELETE Book
-DELETE https://cse341-course-gp-ak75.onrender.com/books/6a5e7eedaed1842b4a131922
+### GET all quotations
+GET {{render}}/quotations

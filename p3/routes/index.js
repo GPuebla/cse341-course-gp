@@ -7,12 +7,13 @@ routes.get('/', /*
   #swagger.description = 'Welcome route / health check for the API.'
 */
 (req, res) => {
-  res.send('Welcome to the Books API!');
+  res.send('Welcome to the CargoQuote API!');
 });
 
-routes.use('/auth', require('./auth'));
-routes.use('/books', require('./books'));
-routes.use('/authors', require('./authors'));
-routes.use('/categories', require('./categories'));
+routes.use('/auth', require('./auth.routes'));
+routes.use('/customers', require('./customer.routes'));
+routes.use('/quotations', require('./quotation.routes'));
+routes.use('/carriers', require('./carrier.routes'));
+routes.use('/ports', require('./port.routes'));
 
 module.exports = routes;

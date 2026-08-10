@@ -3,7 +3,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const swaggerUi = require('swagger-ui-express');
 
-const mongodb = require('./data/db.js');
+const connectDB = require('./config/db.js');
 const passport = require('./config/passport.js');
 const { AppError } = require('./utils/errors.js');
 const errorHandler = require('./middlewares/errorHandler.js');
@@ -64,13 +64,12 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-
-mongodb.initDb((err) => {
-  if (err) {
-    console.log(err);
-  } else {
+connectDB()
+  .then(() => {
     app.listen(PORT, () => {
-      console.log(`Database is listening and server is running on port ${PORT}`);
+      console.log(`Database is connected and server is running on port ${PORT}`);
     });
-  }
-});
+  })
+  .catch((err) => {
+    console.log(err);
+  });

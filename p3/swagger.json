@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Books API",
-    "description": "API for managing books - CSE 341",
+    "title": "CargoQuote API",
+    "description": "API for managing freight quotations, customers, carriers and ports - CSE 341",
     "version": "1.0.0"
   },
   "host": "localhost:5000",
@@ -53,7 +53,7 @@
           "Auth"
         ],
         "summary": "GitHub OAuth callback",
-        "description": "Called automatically by GitHub after authorization. Not meant to be invoked directly.",
+        "description": "Called automatically by GitHub after authorization. Creates or updates the local user and starts the session. Not meant to be invoked directly.",
         "responses": {
           "default": {
             "description": ""
@@ -89,13 +89,13 @@
         }
       }
     },
-    "/auth/profile": {
+    "/auth/user": {
       "get": {
         "tags": [
           "Auth"
         ],
         "summary": "Get current logged-in user",
-        "description": "Returns the profile of the currently authenticated user. Requires an active session — log in via GET /auth/github in a browser first, then call this from the same browser session.",
+        "description": "Returns the profile of the currently authenticated user, or 401 if there is no active session. Log in via GET /auth/github in a browser first, then call this from the same browser session.",
         "responses": {
           "200": {
             "description": "OK"
@@ -108,463 +108,54 @@
         ]
       }
     },
-    "/books/": {
+    "/customers/": {
       "get": {
         "tags": [
-          "Books"
+          "Customers"
         ],
-        "summary": "Get all books",
-        "description": "Returns the complete list of books.",
+        "summary": "Get all customers",
+        "description": "Returns the complete list of customers. Requires an active GitHub-authenticated session.",
         "responses": {
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
       },
       "post": {
         "tags": [
-          "Books"
+          "Customers"
         ],
-        "summary": "Create a book",
-        "description": "Creates a new book. Requires an active GitHub-authenticated session.",
+        "summary": "Create a customer",
+        "description": "Creates a new customer. Requires an active GitHub-authenticated session.",
         "parameters": [
           {
             "name": "body",
             "in": "body",
             "required": true,
-            "description": "Book information",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string",
-                  "example": "Harry Potter and the Philosopher's Stone"
-                },
-                "isbn": {
-                  "type": "string",
-                  "example": "9780747532699"
-                },
-                "publicationYear": {
-                  "type": "number",
-                  "example": 1997
-                },
-                "pages": {
-                  "type": "number",
-                  "example": 320
-                },
-                "available": {
-                  "type": "boolean",
-                  "example": true
-                },
-                "authorId": {
-                  "type": "string",
-                  "example": "6a5fcf35bbd9c1e51975510d"
-                },
-                "categoryId": {
-                  "type": "string",
-                  "example": "6a610012beb4c4d3b32c9b50"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          }
-        },
-        "security": [
-          {
-            "sessionAuth": []
-          }
-        ]
-      }
-    },
-    "/books/author/{authorId}": {
-      "get": {
-        "tags": [
-          "Books"
-        ],
-        "summary": "Get books by author",
-        "description": "Returns all books written by the specified author.",
-        "parameters": [
-          {
-            "name": "authorId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Author MongoDB ObjectId",
-            "example": "6a5fcf35bbd9c1e51975510d"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/books/category/{categoryId}": {
-      "get": {
-        "tags": [
-          "Books"
-        ],
-        "summary": "Get books by category",
-        "description": "Returns all books that belong to the specified category.",
-        "parameters": [
-          {
-            "name": "categoryId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Category MongoDB ObjectId",
-            "example": "6a610012beb4c4d3b32c9b50"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/books/{id}": {
-      "get": {
-        "tags": [
-          "Books"
-        ],
-        "summary": "Get book by id",
-        "description": "Returns a single book by its MongoDB ObjectId.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Book MongoDB ObjectId",
-            "example": "6a700001aed1842b4a131001"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Books"
-        ],
-        "summary": "Update a book",
-        "description": "Updates an existing book. Requires an active GitHub-authenticated session.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Book MongoDB ObjectId",
-            "example": "6a700001aed1842b4a131001"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "description": "Updated book information",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string",
-                  "example": "Harry Potter and the Philosopher's Stone"
-                },
-                "isbn": {
-                  "type": "string",
-                  "example": "9780747532699"
-                },
-                "publicationYear": {
-                  "type": "number",
-                  "example": 1997
-                },
-                "pages": {
-                  "type": "number",
-                  "example": 320
-                },
-                "available": {
-                  "type": "boolean",
-                  "example": true
-                },
-                "authorId": {
-                  "type": "string",
-                  "example": "6a5fcf35bbd9c1e51975510d"
-                },
-                "categoryId": {
-                  "type": "string",
-                  "example": "6a610012beb4c4d3b32c9b50"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "security": [
-          {
-            "sessionAuth": []
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "Books"
-        ],
-        "summary": "Delete a book",
-        "description": "Deletes a book by its MongoDB ObjectId. Requires an active GitHub-authenticated session.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Book MongoDB ObjectId",
-            "example": "6a700001aed1842b4a131001"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "security": [
-          {
-            "sessionAuth": []
-          }
-        ]
-      }
-    },
-    "/authors/": {
-      "get": {
-        "tags": [
-          "Authors"
-        ],
-        "summary": "Get all authors",
-        "description": "Returns the complete list of authors.",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Authors"
-        ],
-        "summary": "Create an author",
-        "description": "Creates a new author. Requires an active GitHub-authenticated session.",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "description": "Author information",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "firstName": {
-                  "type": "string",
-                  "example": "Penelope"
-                },
-                "lastName": {
-                  "type": "string",
-                  "example": "Rowling"
-                },
-                "nationality": {
-                  "type": "string",
-                  "example": "Mexican"
-                },
-                "birthDate": {
-                  "type": "string",
-                  "example": "1978-07-06"
-                },
-                "email": {
-                  "type": "string",
-                  "example": "penelope@example.com"
-                },
-                "biography": {
-                  "type": "string",
-                  "example": "Author of the many books."
-                },
-                "active": {
-                  "type": "boolean",
-                  "example": true
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          }
-        },
-        "security": [
-          {
-            "sessionAuth": []
-          }
-        ]
-      }
-    },
-    "/authors/{id}": {
-      "get": {
-        "tags": [
-          "Authors"
-        ],
-        "summary": "Get author by id",
-        "description": "Returns a single author by their MongoDB ObjectId.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Author MongoDB ObjectId",
-            "example": "6a5fcf35bbd9c1e51975510d"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Authors"
-        ],
-        "summary": "Update an author",
-        "description": "Updates an existing author. Requires an active GitHub-authenticated session.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Author MongoDB ObjectId",
-            "example": "6a5fcf35bbd9c1e51975510d"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "description": "Updated author information",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "firstName": {
-                  "type": "string",
-                  "example": "Penelope"
-                },
-                "lastName": {
-                  "type": "string",
-                  "example": "Rowling"
-                },
-                "nationality": {
-                  "type": "string",
-                  "example": "Mexican"
-                },
-                "birthDate": {
-                  "type": "string",
-                  "example": "1978-07-31"
-                },
-                "email": {
-                  "type": "string",
-                  "example": "penelope@example.com"
-                },
-                "biography": {
-                  "type": "string",
-                  "example": "Author of the many books."
-                },
-                "active": {
-                  "type": "boolean",
-                  "example": true
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "security": [
-          {
-            "sessionAuth": []
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "Authors"
-        ],
-        "summary": "Delete an author",
-        "description": "Deletes an author by their MongoDB ObjectId. Requires an active GitHub-authenticated session.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Author MongoDB ObjectId",
-            "example": "6a5fcf35bbd9c1e51975510d"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "security": [
-          {
-            "sessionAuth": []
-          }
-        ]
-      }
-    },
-    "/categories/": {
-      "get": {
-        "tags": [
-          "Categories"
-        ],
-        "summary": "Get all categories",
-        "description": "Returns the complete list of categories.",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Categories"
-        ],
-        "summary": "Create a category",
-        "description": "Creates a new category. Requires an active GitHub-authenticated session.",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "description": "Category information",
+            "description": "Customer information",
             "schema": {
               "type": "object",
               "properties": {
                 "name": {
                   "type": "string",
-                  "example": "Science Fiction"
+                  "example": "Ana Torres"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "ana.torres@example.com"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "+54 11 5555-0100"
+                },
+                "company": {
+                  "type": "string",
+                  "example": "Torres Import/Export S.A."
                 }
               }
             }
@@ -582,55 +173,72 @@
         ]
       }
     },
-    "/categories/{id}": {
+    "/customers/{customerId}": {
       "get": {
         "tags": [
-          "Categories"
+          "Customers"
         ],
-        "summary": "Get category by id",
-        "description": "Returns a single category by its MongoDB ObjectId.",
+        "summary": "Get customer by id",
+        "description": "Returns a single customer by their MongoDB ObjectId. Requires an active GitHub-authenticated session.",
         "parameters": [
           {
-            "name": "id",
+            "name": "customerId",
             "in": "path",
             "required": true,
             "type": "string",
-            "description": "Category MongoDB ObjectId",
-            "example": "6a610012beb4c4d3b32c9b50"
+            "description": "Customer MongoDB ObjectId",
+            "example": "6a5fcf35bbd9c1e51975510d"
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
       },
       "put": {
         "tags": [
-          "Categories"
+          "Customers"
         ],
-        "summary": "Update a category",
-        "description": "Updates an existing category. Requires an active GitHub-authenticated session.",
+        "summary": "Update a customer",
+        "description": "Updates an existing customer. Requires an active GitHub-authenticated session.",
         "parameters": [
           {
-            "name": "id",
+            "name": "customerId",
             "in": "path",
             "required": true,
             "type": "string",
-            "description": "Category MongoDB ObjectId",
-            "example": "6a610012beb4c4d3b32c9b50"
+            "description": "Customer MongoDB ObjectId",
+            "example": "6a5fcf35bbd9c1e51975510d"
           },
           {
             "name": "body",
             "in": "body",
             "required": true,
-            "description": "Updated category information",
+            "description": "Updated customer information",
             "schema": {
               "type": "object",
               "properties": {
                 "name": {
                   "type": "string",
-                  "example": "Science Fiction"
+                  "example": "Ana Torres"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "ana.torres@example.com"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "+54 11 5555-0100"
+                },
+                "company": {
+                  "type": "string",
+                  "example": "Torres Import/Export S.A."
                 }
               }
             }
@@ -649,18 +257,672 @@
       },
       "delete": {
         "tags": [
-          "Categories"
+          "Customers"
         ],
-        "summary": "Delete a category",
-        "description": "Deletes a category by its MongoDB ObjectId. Requires an active GitHub-authenticated session.",
+        "summary": "Delete a customer",
+        "description": "Deletes a customer by their MongoDB ObjectId. Requires an active GitHub-authenticated session.",
         "parameters": [
           {
-            "name": "id",
+            "name": "customerId",
             "in": "path",
             "required": true,
             "type": "string",
-            "description": "Category MongoDB ObjectId",
+            "description": "Customer MongoDB ObjectId",
+            "example": "6a5fcf35bbd9c1e51975510d"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/quotations/": {
+      "get": {
+        "tags": [
+          "Quotations"
+        ],
+        "summary": "Get all quotations",
+        "description": "Returns the complete list of quotations, with customer and carrier populated. Requires an active GitHub-authenticated session.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Quotations"
+        ],
+        "summary": "Create a quotation",
+        "description": "Creates a new quotation. Requires an active GitHub-authenticated session.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Quotation information",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "customerId": {
+                  "type": "string",
+                  "example": "6a5fcf35bbd9c1e51975510d"
+                },
+                "carrierId": {
+                  "type": "string",
+                  "example": "6a610012beb4c4d3b32c9b50"
+                },
+                "origin": {
+                  "type": "string",
+                  "example": "Puerto de Buenos Aires"
+                },
+                "destination": {
+                  "type": "string",
+                  "example": "Rotterdam"
+                },
+                "cargoType": {
+                  "type": "string",
+                  "example": "general"
+                },
+                "weight": {
+                  "type": "number",
+                  "example": 12000
+                },
+                "volume": {
+                  "type": "number",
+                  "example": 28.5
+                },
+                "rate": {
+                  "type": "number",
+                  "example": 2450
+                },
+                "currency": {
+                  "type": "string",
+                  "example": "USD"
+                },
+                "status": {
+                  "type": "string",
+                  "example": "draft"
+                },
+                "validUntil": {
+                  "type": "string",
+                  "example": "2026-12-31"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/quotations/customer/{customerId}": {
+      "get": {
+        "tags": [
+          "Quotations"
+        ],
+        "summary": "Get quotations by customer",
+        "description": "Returns all quotations belonging to the specified customer. Requires an active GitHub-authenticated session.",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Customer MongoDB ObjectId",
+            "example": "6a5fcf35bbd9c1e51975510d"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/quotations/{quotationId}": {
+      "get": {
+        "tags": [
+          "Quotations"
+        ],
+        "summary": "Get quotation by id",
+        "description": "Returns a single quotation by its MongoDB ObjectId, with customer and carrier populated. Requires an active GitHub-authenticated session.",
+        "parameters": [
+          {
+            "name": "quotationId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Quotation MongoDB ObjectId",
+            "example": "6a700001aed1842b4a131001"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Quotations"
+        ],
+        "summary": "Update a quotation",
+        "description": "Updates an existing quotation. Requires an active GitHub-authenticated session.",
+        "parameters": [
+          {
+            "name": "quotationId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Quotation MongoDB ObjectId",
+            "example": "6a700001aed1842b4a131001"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Updated quotation information",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "customerId": {
+                  "type": "string",
+                  "example": "6a5fcf35bbd9c1e51975510d"
+                },
+                "carrierId": {
+                  "type": "string",
+                  "example": "6a610012beb4c4d3b32c9b50"
+                },
+                "origin": {
+                  "type": "string",
+                  "example": "Puerto de Buenos Aires"
+                },
+                "destination": {
+                  "type": "string",
+                  "example": "Rotterdam"
+                },
+                "cargoType": {
+                  "type": "string",
+                  "example": "general"
+                },
+                "weight": {
+                  "type": "number",
+                  "example": 12000
+                },
+                "volume": {
+                  "type": "number",
+                  "example": 28.5
+                },
+                "rate": {
+                  "type": "number",
+                  "example": 2450
+                },
+                "currency": {
+                  "type": "string",
+                  "example": "USD"
+                },
+                "status": {
+                  "type": "string",
+                  "example": "sent"
+                },
+                "validUntil": {
+                  "type": "string",
+                  "example": "2026-12-31"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Quotations"
+        ],
+        "summary": "Delete a quotation",
+        "description": "Deletes a quotation by its MongoDB ObjectId. Requires an active GitHub-authenticated session.",
+        "parameters": [
+          {
+            "name": "quotationId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Quotation MongoDB ObjectId",
+            "example": "6a700001aed1842b4a131001"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/quotations/{quotationId}/status": {
+      "put": {
+        "tags": [
+          "Quotations"
+        ],
+        "summary": "Update quotation status",
+        "description": "Updates only the status field of a quotation. Requires an active GitHub-authenticated session.",
+        "parameters": [
+          {
+            "name": "quotationId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Quotation MongoDB ObjectId",
+            "example": "6a700001aed1842b4a131001"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "New status. One of: draft, sent, accepted, rejected.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "accepted"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/carriers/": {
+      "get": {
+        "tags": [
+          "Carriers"
+        ],
+        "summary": "Get all carriers",
+        "description": "Returns the complete list of shipping carriers. Requires an active GitHub-authenticated session.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Carriers"
+        ],
+        "summary": "Create a carrier",
+        "description": "Creates a new shipping carrier. Requires an active GitHub-authenticated session.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Carrier information",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Maersk"
+                },
+                "scacCode": {
+                  "type": "string",
+                  "example": "MAEU"
+                },
+                "contactEmail": {
+                  "type": "string",
+                  "example": "contact@maersk.com"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "+45 33 63 33 63"
+                },
+                "website": {
+                  "type": "string",
+                  "example": "https://www.maersk.com"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/carriers/{carrierId}": {
+      "get": {
+        "tags": [
+          "Carriers"
+        ],
+        "summary": "Get carrier by id",
+        "description": "Returns a single carrier by its MongoDB ObjectId. Requires an active GitHub-authenticated session.",
+        "parameters": [
+          {
+            "name": "carrierId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Carrier MongoDB ObjectId",
             "example": "6a610012beb4c4d3b32c9b50"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Carriers"
+        ],
+        "summary": "Update a carrier",
+        "description": "Updates an existing carrier. Requires an active GitHub-authenticated session.",
+        "parameters": [
+          {
+            "name": "carrierId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Carrier MongoDB ObjectId",
+            "example": "6a610012beb4c4d3b32c9b50"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Updated carrier information",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Maersk"
+                },
+                "scacCode": {
+                  "type": "string",
+                  "example": "MAEU"
+                },
+                "contactEmail": {
+                  "type": "string",
+                  "example": "contact@maersk.com"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "+45 33 63 33 63"
+                },
+                "website": {
+                  "type": "string",
+                  "example": "https://www.maersk.com"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Carriers"
+        ],
+        "summary": "Delete a carrier",
+        "description": "Deletes a carrier by its MongoDB ObjectId. Requires an active GitHub-authenticated session.",
+        "parameters": [
+          {
+            "name": "carrierId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Carrier MongoDB ObjectId",
+            "example": "6a610012beb4c4d3b32c9b50"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/ports/": {
+      "get": {
+        "tags": [
+          "Ports"
+        ],
+        "summary": "Get all ports",
+        "description": "Returns the complete list of ports. Requires an active GitHub-authenticated session.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Ports"
+        ],
+        "summary": "Create a port",
+        "description": "Creates a new port. Requires an active GitHub-authenticated session.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Port information",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Puerto de Buenos Aires"
+                },
+                "unlocode": {
+                  "type": "string",
+                  "example": "ARBUE"
+                },
+                "country": {
+                  "type": "string",
+                  "example": "Argentina"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/ports/{portId}": {
+      "get": {
+        "tags": [
+          "Ports"
+        ],
+        "summary": "Get port by id",
+        "description": "Returns a single port by its MongoDB ObjectId. Requires an active GitHub-authenticated session.",
+        "parameters": [
+          {
+            "name": "portId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Port MongoDB ObjectId",
+            "example": "6a700001aed1842b4a131001"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Ports"
+        ],
+        "summary": "Update a port",
+        "description": "Updates an existing port. Requires an active GitHub-authenticated session.",
+        "parameters": [
+          {
+            "name": "portId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Port MongoDB ObjectId",
+            "example": "6a700001aed1842b4a131001"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Updated port information",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Puerto de Buenos Aires"
+                },
+                "unlocode": {
+                  "type": "string",
+                  "example": "ARBUE"
+                },
+                "country": {
+                  "type": "string",
+                  "example": "Argentina"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Ports"
+        ],
+        "summary": "Delete a port",
+        "description": "Deletes a port by its MongoDB ObjectId. Requires an active GitHub-authenticated session.",
+        "parameters": [
+          {
+            "name": "portId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Port MongoDB ObjectId",
+            "example": "6a700001aed1842b4a131001"
           }
         ],
         "responses": {
